@@ -1,15 +1,81 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0284c7" />
-    <meta name="description" content="Vehicle GPS tracking application with real-time location monitoring" />
-    <title>Vehicle Tracking System</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantalla Home - Seguimiento Vehículos</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY"></script>
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sección Mapa -->
+    <div class="map-section">
+      <div id="map" class="map-container"></div>
+    </div>
+
+    <!-- Sección Listado -->
+    <div class="list-section">
+      <div class="vehicle-list">
+        <input type="text" id="search" placeholder="Buscar vehículo..." />
+
+        <!-- Tarjeta de vehículo -->
+        <div class="vehicle-card" onclick="selectVehicle(1)">
+          <h4>Camión 01</h4>
+          <p>Conductor: Juan Pérez</p>
+          <p>Documento: 123456</p>
+        </div>
+
+        <div class="vehicle-card" onclick="selectVehicle(2)">
+          <h4>Auto 02</h4>
+          <p>Conductor: María Gómez</p>
+          <p>Documento: 789012</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let map;
+    let marker;
+
+    function initMap() {
+      const initialPos = { lat: 4.711, lng: -74.072 };
+
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: initialPos,
+        zoom: 14,
+      });
+
+      marker = new google.maps.Marker({
+        position: initialPos,
+        map,
+        icon: "assets/mark-point.svg", // Ícono del UI KIT
+        title: "Camión 01",
+      });
+
+      // Ejemplo de ruta resaltada
+      const routePath = new google.maps.Polyline({
+        path: [
+          { lat: 4.711, lng: -74.072 },
+          { lat: 4.715, lng: -74.070 },
+        ],
+        geodesic: true,
+        strokeColor: "#00A86B",
+        strokeOpacity: 1.0,
+        strokeWeight: 3,
+      });
+      routePath.setMap(map);
+    }
+
+    function selectVehicle(id) {
+      // Aquí puedes actualizar el marcador y la ruta según el vehículo seleccionado
+      alert("Seleccionaste vehículo ID: " + id);
+    }
+
+    window.onload = initMap;
+  </script>
+</body>
 </html>
