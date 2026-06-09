@@ -1,0 +1,37 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Instalar Node.js'
+
+- script: |
+    npm install
+  displayName: 'Instalar dependencias'
+
+- script: |
+    npm test
+  displayName: 'Ejecutar pruebas'
+
+- script: |
+    npm start &
+    sleep 10
+  displayName: 'Iniciar servidor para validación'
+
+- script: |
+    cd backend
+    npm install
+  displayName: 'Instalar dependencias backend'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'backend'
+    ArtifactName: 'backend'
+    publishLocation: 'Container'

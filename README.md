@@ -102,7 +102,7 @@ vehicle-tracking-app/
    yarn dev
    ```
 
-   The app will open at `http://localhost:3000`
+   The app will open at `http://localhost:3001`
 
 ## Development Commands 💻
 
@@ -153,6 +153,11 @@ npm run lint
 ### Vehicle
 
 ```typescript
+interface DateRange {
+  startDate: string; // "2025-07-12" (ISO timestamp o formato YYYY-MM-DD)
+  endDate: string;   // "2026-07-12"
+}
+
 interface Vehicle {
   id: string;
   plate: string;                    // e.g., "ABC-123"
@@ -166,6 +171,7 @@ interface Vehicle {
   batteryLevel?: number;            // 0-100
   speed?: number;                   // km/h
   route?: GpsCoordinates[];         // Polyline coordinates
+  validityPeriod?: DateRange; 
 }
 ```
 
